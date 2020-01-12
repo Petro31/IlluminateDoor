@@ -51,7 +51,7 @@ key | optional | type | default | description
 `turn_on` | False | list | | A list of entity_id's or entity objects.
 `duration` | True | int | 120 | Turn on light/switch duration in seconds.
 `sundown` | True | bool | true | Uses sundown check.  If true, lights will only turn on after sundown.
-`log_level` | True | `'INFO'` | `'DEBUG'` | `'DEBUG'` | Switches log level.  This for lazy debuggers.  If you don't want to restart appdaemon to view debug logs, change this to `'INFO'` and all debug logs for this app will show up in `'INFO'`.
+`log_level` | True | `'INFO'` &#124; `'DEBUG'` | `'DEBUG'` | Switches log level.  This for lazy debuggers.  If you don't want to restart appdaemon to view debug logs, change this to `'INFO'` and all debug logs for this app will show up in `'INFO'`.
 
 
 #### Entity Object Configuration
