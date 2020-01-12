@@ -11,7 +11,9 @@ Download the `illuminate_door` directory from inside the `apps` directory here t
 
 ## Use Case Examples
 
-It's the holiday season.  Your front door lights are set to holiday colors.  When the front door opens, your holiday colored lights will change to bright yellow for 2 minutes, then return to 
+#### Holiday lights
+
+It's the holiday season.  Your front door lights are set to holiday colors.  The front door opens and the front door lights change to bright white to illuminate the steps for guests.  After the door is closed, 2 minutes later the lights return to holiday colors.
 
 ## Example App configuration
 
