@@ -1,6 +1,6 @@
 {
     "name": "Illuminate Door",
     "country": "US",
-    "render_readme": "true"
+    "render_readme": "true",
     "domains": ["sensor","switch","light"]
 }
