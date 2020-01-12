@@ -56,6 +56,7 @@ key | optional | type | default | description
 
 #### Entity Object Configuration
 key | optional | type | default | description
+-- | -- | -- | -- | --
 `entity` | False | string | | The entity_id of the switch or light.
 `data` | True | map | | Turn on service data.  Whenever the door turns on a light or switch, this data will be passed to the service data.  Warning: Use only valid combinations.  Light combinations are not validated and can cause errors in Home Assistant.
 
