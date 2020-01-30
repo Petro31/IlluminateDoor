@@ -77,7 +77,7 @@ class IlluminateDoor(hass.Hass):
 
         # Required
         self.entity = args.get(CONF_SENSOR)
-        self.entities = [ AppEntity(e) for e in args.get(CONF_TURN_ON) ]
+        self._entities = [ AppEntity(e) for e in args.get(CONF_TURN_ON) ]
 
         # Optional
         self.use_sun = args.get(CONF_SUNDOWN)
@@ -99,7 +99,7 @@ class IlluminateDoor(hass.Hass):
             # Door is opened
 
             if new in DOOR_OPEN_STATES:
-                for e in self.entities:
+                for e in self._entities:
                     if e.entity_id not in self.overrides:
                         # Cancel any timers for the current entity.
                         # This case is for when someone opens the door
@@ -111,6 +111,8 @@ class IlluminateDoor(hass.Hass):
     
                         # create a override door listen state handle for each entity
                         self.start_listen_state_handle(e.entity_id)
+
+                        self.log(self.handles, level = self._level)
                         
                 # cancel the override if the door is opened after closing and stays open.
                 self.cancel_timer_handle(SCHEDULE_OVERRIDE)
@@ -118,7 +120,7 @@ class IlluminateDoor(hass.Hass):
             # Door is Closed
 
             if new in DOOR_CLOSED_STATES:
-                for e in self.entities:
+                for e in self._entities:
                     if e.entity_id not in self.overrides:
                         self.start_timer_handle(e.entity_id)
 
@@ -194,8 +196,9 @@ class IlluminateDoor(hass.Hass):
     def cancel_listen_state_handle(self, entity_id):
         """ Cancel a listen state handle for the provided entity_id """
         if entity_id in self.handles:
+            handle = self.handles.pop(entity_id)
             self.log("Canceling listen state handle '{}'".format(entity_id), level = self._level)
-            self.cancel_listen_state(self.handles[entity_id])
+            self.cancel_listen_state(handle)
 
     def take_snapshot(self, entity_id):
         """ Store a momentary state in time """
@@ -234,11 +237,13 @@ class IlluminateDoor(hass.Hass):
         return None
 
     def terminate(self):
-        for entity in self.handles.keys():
-            self.cancel_listen_state_handle(entity)
+        for key, handle in self.handles.items():
+            self.log(f"Canceling listen state handle '{key}'", level = self._level)
+            self.cancel_listen_state(handle)
             
-        for entity in self.timers.keys():
-            self.cancel_timer_handle(entity)
+        for key, handle in self.timers.items():
+            self.log(f"Canceling timer handle '{key}'", level = self._level)
+            self.cancel_timer(handle)
 
 class AppEntity(object):
     def __init__(self, config_entity):
